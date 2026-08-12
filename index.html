@@ -12,109 +12,256 @@
         extend: {
           colors: {
             ark: {
-              950: '#0B0F0C',
-              900: '#111814',
-              800: '#18221A',
-              700: '#24352A',
-              600: '#3F6B3F',
-              500: '#5B8F45',
-              400: '#6FAF45',
-              gold: '#C99A3D',
-              text: '#E8E8E8',
-              muted: '#9AA49C'
+              950: '#080B09',
+              900: '#0D120F',
+              800: '#141C16',
+              700: '#1E2B1D',
+              600: '#30472A',
+              500: '#527338',
+              400: '#7FA44B',
+              soil: '#59452F',
+              stone: '#665F50',
+              metal: '#9B9B8E',
+              amber: '#C3A15A',
+              text: '#E6E2D5',
+              muted: '#9D9A8C',
+              dim: '#696B62'
             }
           },
           boxShadow: {
-            panel: '0 18px 50px rgba(0,0,0,.22)'
+            panel: '0 18px 45px rgba(0,0,0,.30)',
+            soft: '0 8px 25px rgba(0,0,0,.20)'
           }
         }
       }
     };
   </script>
   <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080B09;
+      --charcoal: #0D120F;
+      --forest: #141C16;
+      --moss: #1E2B1D;
+      --natural: #527338;
+      --leaf: #7FA44B;
+      --soil: #59452F;
+      --stone: #665F50;
+      --metal: #9B9B8E;
+      --amber: #C3A15A;
+      --text: #E6E2D5;
+      --muted: #9D9A8C;
+      --dim: #696B62;
+    }
+
+    * { box-sizing: border-box; }
     html, body { min-height: 100%; }
-    body { background:#0B0F0C; color:#E8E8E8; }
-    .glass { background:rgba(17,24,20,.82); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); }
-    .auth-bg { background:radial-gradient(circle at 15% 20%, rgba(111,175,69,.18), transparent 32%), radial-gradient(circle at 85% 15%, rgba(201,154,61,.10), transparent 26%), linear-gradient(135deg,#0B0F0C,#111814 55%,#0B0F0C); }
-    .grid-bg { background-image:linear-gradient(rgba(111,175,69,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(111,175,69,.045) 1px,transparent 1px); background-size:42px 42px; }
-    .nav-active { background:rgba(111,175,69,.10); color:#fff; box-shadow:inset 2px 0 0 #6FAF45; }
-    .btn-primary { background:#6FAF45; }
-    .btn-primary:hover { background:#5f9b3d; }
-    .card { border:1px solid rgba(255,255,255,.07); background:rgba(17,24,20,.75); }
-    .focus-ring:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline:2px solid #6FAF45; outline-offset:2px; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 18% -8%, rgba(82,115,56,.11), transparent 30%),
+        radial-gradient(circle at 92% 4%, rgba(195,161,90,.05), transparent 24%),
+        linear-gradient(180deg, var(--bg) 0%, #0A0E0B 48%, var(--bg) 100%);
+      color: var(--text);
+    }
+
+    .app-grain::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .025;
+      z-index: 80;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+    }
+
+    .auth-bg {
+      background:
+        radial-gradient(circle at 15% 18%, rgba(82,115,56,.18), transparent 30%),
+        radial-gradient(circle at 84% 14%, rgba(195,161,90,.09), transparent 22%),
+        linear-gradient(135deg, #080B09 0%, #111811 50%, #080B09 100%);
+    }
+
+    .canopy-grid {
+      background-image:
+        linear-gradient(rgba(127,164,75,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(127,164,75,.035) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, black, transparent 80%);
+    }
+
+    .panel {
+      background:
+        linear-gradient(180deg, rgba(20,28,22,.96), rgba(14,20,16,.96));
+      border: 1px solid rgba(102,95,80,.24);
+      box-shadow: 0 16px 40px rgba(0,0,0,.20);
+    }
+
+    .panel-soft {
+      background: rgba(13,18,15,.88);
+      border: 1px solid rgba(102,95,80,.18);
+    }
+
+    .edge-line {
+      position: relative;
+    }
+    .edge-line::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(127,164,75,.38), rgba(195,161,90,.16), transparent 75%);
+      pointer-events: none;
+    }
+
+    .tek-mark {
+      background: linear-gradient(135deg, rgba(127,164,75,.13), rgba(195,161,90,.07));
+      border: 1px solid rgba(127,164,75,.22);
+      color: var(--leaf);
+    }
+
+    .nav-active {
+      background: linear-gradient(90deg, rgba(82,115,56,.22), rgba(82,115,56,.06));
+      box-shadow: inset 2px 0 0 var(--leaf), inset 0 1px 0 rgba(195,161,90,.06);
+      color: var(--text);
+    }
+
+    .nav-item:hover { background: rgba(82,115,56,.09); }
+
+    .btn-primary {
+      background: linear-gradient(180deg, #6F963F 0%, #587D34 100%);
+      border: 1px solid rgba(195,161,90,.12);
+      color: #F4F0E5;
+      box-shadow: 0 8px 22px rgba(63,90,44,.24);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(180deg, #7CA348 0%, #62893B 100%);
+      transform: translateY(-1px);
+    }
+
+    .field {
+      background: rgba(8,11,9,.52);
+      border: 1px solid rgba(102,95,80,.22);
+      color: var(--text);
+    }
+    .field::placeholder { color: rgba(157,154,140,.45); }
+    .field:hover { border-color: rgba(102,95,80,.34); }
+
+    .subtle-rule { border-color: rgba(102,95,80,.18); }
+
+    .focus-ring:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible {
+      outline: 2px solid var(--leaf);
+      outline-offset: 2px;
+    }
+
+    .category-active {
+      background: rgba(82,115,56,.18);
+      border-color: rgba(127,164,75,.34);
+      color: var(--leaf);
+    }
+
+    .category-idle {
+      background: rgba(13,18,15,.55);
+      border-color: rgba(102,95,80,.18);
+      color: var(--muted);
+    }
+
+    .empty-icon {
+      background: radial-gradient(circle at 35% 30%, rgba(127,164,75,.12), rgba(20,28,22,.15) 65%);
+      border: 1px solid rgba(127,164,75,.12);
+      color: rgba(155,155,142,.55);
+    }
+
+    @media (max-width: 1023px) {
+      .desktop-only { display: none !important; }
+    }
   </style>
 </head>
-<body class="min-h-screen">
+<body class="app-grain min-h-screen font-sans">
   <!-- AUTH -->
   <section id="auth-screen" class="auth-bg relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-8">
-    <div class="grid-bg absolute inset-0"></div>
-    <div class="relative z-10 grid w-full max-w-5xl overflow-hidden rounded-[30px] border border-white/10 bg-black/20 shadow-panel lg:grid-cols-2">
-      <div class="hidden flex-col justify-between p-10 lg:flex xl:p-14">
+    <div class="canopy-grid absolute inset-0"></div>
+    <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/20 to-transparent"></div>
+
+    <div class="relative z-10 grid w-full max-w-6xl overflow-hidden rounded-[28px] border border-[#665F50]/25 bg-[#0D120F]/75 shadow-panel backdrop-blur-sm lg:grid-cols-[1.08fr_.92fr]">
+      <div class="hidden min-h-[670px] flex-col justify-between p-10 lg:flex xl:p-14">
         <div>
           <div class="flex items-center gap-3">
-            <div class="grid h-12 w-12 place-items-center rounded-2xl border border-ark-400/20 bg-ark-400/10 text-ark-400" aria-hidden="true">◈</div>
-            <span class="text-2xl font-black tracking-tight">Ark<span class="text-ark-400">Hub</span></span>
+            <div class="tek-mark grid h-12 w-12 place-items-center rounded-2xl" aria-hidden="true">
+              <span class="text-2xl">◈</span>
+            </div>
+            <span class="text-3xl font-black tracking-tight text-[#E6E2D5]">Ark<span class="text-ark-amber">Hub</span></span>
           </div>
-          <p class="mt-12 text-xs font-bold uppercase tracking-[.25em] text-ark-400">Community platform</p>
-          <h1 class="mt-4 max-w-xl text-5xl font-black leading-tight">A comunidade dos sobreviventes.</h1>
-          <p class="mt-5 max-w-xl text-base leading-7 text-white/50">Uma base para conectar jogadores, publicações, comunidades, mensagens e marketplace.</p>
+          <div class="mt-16 max-w-xl">
+            <p class="text-[11px] font-bold uppercase tracking-[.30em] text-ark-amber">ARK community platform</p>
+            <h1 class="mt-4 text-5xl font-black leading-[1.03] tracking-tight text-[#E6E2D5] xl:text-6xl">Entre na<br><span class="text-ark-400">sobrevivência.</span></h1>
+            <p class="mt-6 max-w-lg text-base leading-7 text-ark-muted">Um espaço preparado para reunir jogadores, comunidades, publicações, conversas e trocas em um só lugar.</p>
+          </div>
         </div>
-        <div class="text-xs text-white/30">ArkHub • ARK: Survival Ascended</div>
+        <div class="flex items-center gap-3 text-xs text-ark-dim">
+          <span class="h-1.5 w-1.5 rounded-full bg-ark-amber"></span>
+          ARK: Survival Ascended
+        </div>
       </div>
 
-      <div class="glass p-6 sm:p-10">
+      <div class="bg-[#0D120F]/88 p-6 sm:p-10 lg:border-l lg:border-[#665F50]/15">
         <div class="mb-8 lg:hidden">
           <div class="flex items-center gap-3">
-            <div class="grid h-11 w-11 place-items-center rounded-2xl bg-ark-400/10 text-ark-400" aria-hidden="true">◈</div>
+            <div class="tek-mark grid h-11 w-11 place-items-center rounded-2xl" aria-hidden="true">◈</div>
             <span class="text-2xl font-black">Ark<span class="text-ark-400">Hub</span></span>
           </div>
         </div>
 
-        <div class="mb-7 grid grid-cols-2 rounded-2xl border border-white/10 bg-black/10 p-1" role="tablist" aria-label="Autenticação">
-          <button id="tab-login" type="button" role="tab" aria-selected="true" class="rounded-xl bg-white/10 px-4 py-2.5 text-sm font-bold" onclick="toggleAuth('login')">Entrar</button>
-          <button id="tab-register" type="button" role="tab" aria-selected="false" class="rounded-xl px-4 py-2.5 text-sm font-bold text-white/45" onclick="toggleAuth('register')">Criar conta</button>
+        <div class="mb-7 grid grid-cols-2 border-b border-[#665F50]/20" role="tablist" aria-label="Autenticação">
+          <button id="tab-login" type="button" role="tab" aria-selected="true" class="border-b-2 border-ark-400 px-4 py-3 text-sm font-bold text-ark-text" onclick="toggleAuth('login')">Entrar</button>
+          <button id="tab-register" type="button" role="tab" aria-selected="false" class="border-b-2 border-transparent px-4 py-3 text-sm font-bold text-ark-muted hover:text-ark-text" onclick="toggleAuth('register')">Criar conta</button>
         </div>
 
         <form id="login-form" class="space-y-5" onsubmit="handleLogin(event)">
           <div>
-            <label for="login" class="mb-2 block text-sm font-semibold text-white/75">Login ou e-mail</label>
-            <input id="login" name="login" type="text" autocomplete="username" required class="focus-ring w-full rounded-2xl border border-white/10 bg-black/15 px-4 py-3.5 text-sm placeholder:text-white/25" placeholder="Login ou e-mail">
+            <label for="login" class="mb-2 block text-xs font-bold uppercase tracking-[.12em] text-ark-muted">Login ou e-mail</label>
+            <input id="login" name="login" type="text" autocomplete="username" required class="field focus-ring w-full rounded-xl px-4 py-3.5 text-sm" placeholder="Login ou e-mail">
           </div>
           <div>
-            <label for="password" class="mb-2 block text-sm font-semibold text-white/75">Senha</label>
-            <input id="password" name="password" type="password" autocomplete="current-password" required class="focus-ring w-full rounded-2xl border border-white/10 bg-black/15 px-4 py-3.5 text-sm placeholder:text-white/25" placeholder="Senha">
+            <label for="password" class="mb-2 block text-xs font-bold uppercase tracking-[.12em] text-ark-muted">Senha</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required class="field focus-ring w-full rounded-xl px-4 py-3.5 text-sm" placeholder="Senha">
           </div>
-          <div class="flex items-center justify-between gap-4 text-xs text-white/45">
-            <button type="button" class="hover:text-white" onclick="console.log('Esqueci minha senha')">Esqueci minha senha</button>
-            <span>Frontend base</span>
+          <div class="flex items-center justify-between gap-4 pt-1 text-xs text-ark-muted">
+            <button type="button" class="hover:text-ark-text" onclick="console.log('Esqueci minha senha')">Esqueci minha senha</button>
+            <span class="text-ark-dim">Frontend base</span>
           </div>
-          <button type="submit" class="btn-primary w-full rounded-2xl px-5 py-3.5 text-sm font-extrabold text-white transition">Entrar</button>
+          <button type="submit" class="btn-primary w-full rounded-xl px-5 py-3.5 text-sm font-extrabold transition">Entrar</button>
         </form>
 
         <form id="register-form" class="hidden space-y-4" onsubmit="handleRegister(event)">
           <div>
-            <label for="register-name" class="mb-2 block text-sm font-semibold text-white/75">Nome</label>
-            <input id="register-name" name="name" type="text" required class="focus-ring w-full rounded-2xl border border-white/10 bg-black/15 px-4 py-3.5 text-sm placeholder:text-white/25" placeholder="Nome">
+            <label for="register-name" class="mb-2 block text-xs font-bold uppercase tracking-[.12em] text-ark-muted">Nome</label>
+            <input id="register-name" name="name" type="text" required class="field focus-ring w-full rounded-xl px-4 py-3.5 text-sm" placeholder="Nome">
           </div>
           <div>
-            <label for="register-email" class="mb-2 block text-sm font-semibold text-white/75">E-mail</label>
-            <input id="register-email" name="email" type="email" required class="focus-ring w-full rounded-2xl border border-white/10 bg-black/15 px-4 py-3.5 text-sm placeholder:text-white/25" placeholder="E-mail">
+            <label for="register-email" class="mb-2 block text-xs font-bold uppercase tracking-[.12em] text-ark-muted">E-mail</label>
+            <input id="register-email" name="email" type="email" required class="field focus-ring w-full rounded-xl px-4 py-3.5 text-sm" placeholder="E-mail">
           </div>
           <div>
-            <label for="register-login" class="mb-2 block text-sm font-semibold text-white/75">Login</label>
-            <input id="register-login" name="login" type="text" required class="focus-ring w-full rounded-2xl border border-white/10 bg-black/15 px-4 py-3.5 text-sm placeholder:text-white/25" placeholder="Login">
+            <label for="register-login" class="mb-2 block text-xs font-bold uppercase tracking-[.12em] text-ark-muted">Login</label>
+            <input id="register-login" name="login" type="text" required class="field focus-ring w-full rounded-xl px-4 py-3.5 text-sm" placeholder="Login">
           </div>
           <div class="grid gap-4 sm:grid-cols-2">
             <div>
-              <label for="register-password" class="mb-2 block text-sm font-semibold text-white/75">Senha</label>
-              <input id="register-password" name="password" type="password" required class="focus-ring w-full rounded-2xl border border-white/10 bg-black/15 px-4 py-3.5 text-sm placeholder:text-white/25" placeholder="Senha">
+              <label for="register-password" class="mb-2 block text-xs font-bold uppercase tracking-[.12em] text-ark-muted">Senha</label>
+              <input id="register-password" name="password" type="password" required class="field focus-ring w-full rounded-xl px-4 py-3.5 text-sm" placeholder="Senha">
             </div>
             <div>
-              <label for="register-confirm" class="mb-2 block text-sm font-semibold text-white/75">Confirmar senha</label>
-              <input id="register-confirm" name="confirm" type="password" required class="focus-ring w-full rounded-2xl border border-white/10 bg-black/15 px-4 py-3.5 text-sm placeholder:text-white/25" placeholder="Confirmar senha">
+              <label for="register-confirm" class="mb-2 block text-xs font-bold uppercase tracking-[.12em] text-ark-muted">Confirmar senha</label>
+              <input id="register-confirm" name="confirm" type="password" required class="field focus-ring w-full rounded-xl px-4 py-3.5 text-sm" placeholder="Confirmar senha">
             </div>
           </div>
-          <button type="submit" class="btn-primary w-full rounded-2xl px-5 py-3.5 text-sm font-extrabold text-white transition">Criar conta</button>
+          <button type="submit" class="btn-primary w-full rounded-xl px-5 py-3.5 text-sm font-extrabold transition">Criar conta</button>
         </form>
       </div>
     </div>
@@ -122,32 +269,38 @@
 
   <!-- APP -->
   <div id="app-shell" class="hidden min-h-screen bg-ark-950">
-    <header class="sticky top-0 z-40 border-b border-white/5 bg-ark-950/90 backdrop-blur-xl">
-      <div class="mx-auto flex h-16 max-w-[1500px] items-center justify-between gap-4 px-4 lg:px-6">
-        <button type="button" class="flex items-center gap-3" onclick="showScreen('feed')" aria-label="Ir para Home">
-          <div class="grid h-10 w-10 place-items-center rounded-xl border border-ark-400/20 bg-ark-400/10 text-ark-400" aria-hidden="true">◈</div>
-          <span class="text-lg font-black">Ark<span class="text-ark-400">Hub</span></span>
+    <header class="sticky top-0 z-40 border-b border-[#665F50]/18 bg-ark-900/95 backdrop-blur-xl">
+      <div class="mx-auto flex h-[68px] max-w-[1500px] items-center justify-between gap-4 px-4 lg:px-6">
+        <button type="button" class="group flex items-center gap-3" onclick="showScreen('feed')" aria-label="Ir para Home">
+          <div class="tek-mark grid h-10 w-10 place-items-center rounded-xl transition group-hover:border-ark-amber/30" aria-hidden="true">◈</div>
+          <span class="text-xl font-black tracking-tight text-ark-text">Ark<span class="text-ark-400">Hub</span></span>
         </button>
-        <div class="hidden w-full max-w-lg md:block">
+        <div class="hidden w-full max-w-xl md:block">
           <label for="global-search" class="sr-only">Pesquisar</label>
-          <input id="global-search" type="search" class="focus-ring w-full rounded-2xl border border-white/8 bg-white/[.03] px-4 py-2.5 text-sm placeholder:text-white/25" placeholder="Pesquisar">
+          <div class="relative">
+            <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ark-stone">⌕</span>
+            <input id="global-search" type="search" class="field focus-ring w-full rounded-xl py-3 pl-10 pr-4 text-sm" placeholder="Pesquisar na comunidade">
+          </div>
         </div>
-        <button type="button" class="grid h-10 w-10 place-items-center rounded-xl border border-white/8 bg-white/[.03] text-white/55 hover:text-white" onclick="showScreen('settings')" aria-label="Configurações">⚙</button>
+        <button type="button" class="grid h-10 w-10 place-items-center rounded-xl border border-[#665F50]/20 bg-[#141C16]/80 text-ark-muted transition hover:border-ark-amber/20 hover:text-ark-text" onclick="showScreen('settings')" aria-label="Configurações">⚙</button>
       </div>
     </header>
 
-    <div class="mx-auto grid max-w-[1500px] grid-cols-1 gap-5 px-3 py-4 sm:px-4 lg:grid-cols-[220px_minmax(0,1fr)_270px] lg:px-6">
-      <!-- SIDEBAR DESKTOP -->
-      <aside class="hidden lg:block">
-        <nav class="sticky top-20 rounded-3xl border border-white/6 bg-ark-900/65 p-3" aria-label="Navegação principal">
-          <p class="px-3 pb-3 pt-2 text-[10px] font-extrabold uppercase tracking-[.24em] text-white/25">Navegação</p>
+    <div class="mx-auto grid max-w-[1500px] grid-cols-1 gap-5 px-3 py-5 sm:px-4 lg:grid-cols-[228px_minmax(0,1fr)_276px] lg:px-6">
+      <!-- SIDEBAR -->
+      <aside class="hidden lg:block desktop-only">
+        <nav class="panel edge-line sticky top-[88px] overflow-hidden rounded-2xl p-3" aria-label="Navegação principal">
+          <p class="px-3 pb-3 pt-2 text-[10px] font-extrabold uppercase tracking-[.25em] text-ark-stone">Navegação</p>
           <div class="space-y-1">
-            <button type="button" data-screen="feed" onclick="showScreen('feed')" class="nav-item nav-active flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left text-sm font-semibold"><span aria-hidden="true">⌂</span>Home</button>
-            <button type="button" data-screen="explore" onclick="showScreen('explore')" class="nav-item flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left text-sm font-semibold text-white/50 hover:bg-white/[.03] hover:text-white"><span aria-hidden="true">◌</span>Explorar</button>
-            <button type="button" data-screen="marketplace" onclick="showScreen('marketplace')" class="nav-item flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left text-sm font-semibold text-white/50 hover:bg-white/[.03] hover:text-white"><span aria-hidden="true">◇</span>Marketplace</button>
-            <button type="button" data-screen="messages" onclick="showScreen('messages')" class="nav-item flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left text-sm font-semibold text-white/50 hover:bg-white/[.03] hover:text-white"><span aria-hidden="true">✉</span>Mensagens</button>
-            <button type="button" data-screen="community" onclick="showScreen('community')" class="nav-item flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left text-sm font-semibold text-white/50 hover:bg-white/[.03] hover:text-white"><span aria-hidden="true">♧</span>Comunidade</button>
-            <button type="button" data-screen="settings" onclick="showScreen('settings')" class="nav-item flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left text-sm font-semibold text-white/50 hover:bg-white/[.03] hover:text-white"><span aria-hidden="true">⚙</span>Configurações</button>
+            <button type="button" data-screen="feed" onclick="showScreen('feed')" class="nav-item nav-active flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-semibold"><span class="text-base text-ark-stone">⌂</span>Home</button>
+            <button type="button" data-screen="explore" onclick="showScreen('explore')" class="nav-item flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-semibold text-ark-muted"><span class="text-base text-ark-stone">◌</span>Explorar</button>
+            <button type="button" data-screen="marketplace" onclick="showScreen('marketplace')" class="nav-item flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-semibold text-ark-muted"><span class="text-base text-ark-stone">◇</span>Marketplace</button>
+            <button type="button" data-screen="messages" onclick="showScreen('messages')" class="nav-item flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-semibold text-ark-muted"><span class="text-base text-ark-stone">✉</span>Mensagens</button>
+            <button type="button" data-screen="community" onclick="showScreen('community')" class="nav-item flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-semibold text-ark-muted"><span class="text-base text-ark-stone">♧</span>Comunidade</button>
+            <button type="button" data-screen="settings" onclick="showScreen('settings')" class="nav-item flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-semibold text-ark-muted"><span class="text-base text-ark-stone">⚙</span>Configurações</button>
+          </div>
+          <div class="mt-5 border-t border-[#665F50]/15 pt-4">
+            <div class="flex items-center gap-2 px-3 text-[10px] uppercase tracking-[.16em] text-ark-dim"><span class="h-1.5 w-1.5 rounded-full bg-ark-amber"></span>Survival interface</div>
           </div>
         </nav>
       </aside>
@@ -156,65 +309,91 @@
       <main id="main-content" class="min-w-0 pb-24 lg:pb-6">
         <!-- FEED -->
         <section id="screen-feed" class="screen space-y-5">
-          <div class="card rounded-3xl p-5 shadow-panel sm:p-6">
-            <div>
-              <p class="text-xs font-extrabold uppercase tracking-[.2em] text-ark-400">Feed</p>
-              <h1 class="mt-2 text-2xl font-black">Compartilhe com a comunidade</h1>
+          <div class="panel edge-line rounded-2xl p-5 sm:p-6">
+            <div class="flex items-end justify-between gap-4">
+              <div>
+                <p class="text-[10px] font-extrabold uppercase tracking-[.24em] text-ark-amber">Feed</p>
+                <h1 class="mt-2 text-2xl font-black tracking-tight text-ark-text">Compartilhe com a comunidade</h1>
+              </div>
+              <span class="hidden items-center gap-2 text-[10px] uppercase tracking-[.16em] text-ark-dim sm:flex"><span class="h-1.5 w-1.5 rounded-full bg-ark-400"></span>Área de comunidade</span>
             </div>
             <form id="post-form" class="mt-5" onsubmit="handlePost(event)">
               <label for="post-content" class="sr-only">Criar publicação</label>
-              <textarea id="post-content" rows="4" required class="focus-ring w-full resize-none rounded-2xl border border-white/8 bg-black/10 p-4 text-sm placeholder:text-white/25" placeholder="O que está acontecendo na sua tribo?"></textarea>
+              <textarea id="post-content" rows="4" required class="field focus-ring w-full resize-none rounded-xl p-4 text-sm leading-6" placeholder="O que está acontecendo na sua tribo?"></textarea>
               <div class="mt-3 flex justify-end">
-                <button id="btn-publish" type="submit" class="btn-primary rounded-xl px-5 py-2.5 text-sm font-extrabold text-white">Publicar</button>
+                <button id="btn-publish" type="submit" class="btn-primary rounded-xl px-5 py-2.5 text-sm font-extrabold transition">Publicar</button>
               </div>
             </form>
           </div>
-          <div id="feed-container" class="card min-h-56 rounded-3xl p-8 text-center">
+
+          <div id="feed-container" class="panel min-h-60 rounded-2xl p-8 text-center">
             <div class="mx-auto max-w-sm">
-              <div class="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-white/[.03] text-white/30" aria-hidden="true">◌</div>
-              <h2 class="mt-4 text-sm font-bold">Ainda não há publicações.</h2>
-              <p class="mt-2 text-xs leading-5 text-white/35">As publicações reais aparecerão aqui quando o backend estiver conectado.</p>
+              <div class="empty-icon mx-auto grid h-14 w-14 place-items-center rounded-2xl text-2xl" aria-hidden="true">⌁</div>
+              <h2 class="mt-4 text-sm font-bold text-ark-text">Ainda não há publicações.</h2>
+              <p class="mt-2 text-xs leading-5 text-ark-muted">As publicações reais aparecerão aqui quando o backend estiver conectado.</p>
             </div>
           </div>
         </section>
 
         <!-- EXPLORE -->
         <section id="screen-explore" class="screen hidden space-y-5">
-          <div class="card rounded-3xl p-5 sm:p-6">
-            <p class="text-xs font-extrabold uppercase tracking-[.2em] text-ark-400">Explorar</p>
-            <h1 class="mt-2 text-2xl font-black">Descubra novos conteúdos</h1>
-            <div class="mt-5"><label for="explore-search" class="sr-only">Pesquisar</label><input id="explore-search" type="search" class="focus-ring w-full rounded-2xl border border-white/8 bg-black/10 px-4 py-3 text-sm placeholder:text-white/25" placeholder="Pesquisar"></div>
+          <div class="panel edge-line rounded-2xl p-5 sm:p-6">
+            <p class="text-[10px] font-extrabold uppercase tracking-[.24em] text-ark-amber">Explorar</p>
+            <h1 class="mt-2 text-2xl font-black tracking-tight">Descubra novos conteúdos</h1>
+            <div class="mt-5">
+              <label for="explore-search" class="sr-only">Pesquisar</label>
+              <input id="explore-search" type="search" class="field focus-ring w-full rounded-xl px-4 py-3 text-sm" placeholder="Pesquisar">
+            </div>
           </div>
-          <div class="card min-h-56 rounded-3xl p-8 text-center"><h2 class="text-sm font-bold">Nenhum conteúdo disponível.</h2><p class="mt-2 text-xs text-white/35">Os resultados serão carregados pelo backend.</p></div>
+          <div class="panel min-h-60 rounded-2xl p-8 text-center">
+            <div class="empty-icon mx-auto grid h-14 w-14 place-items-center rounded-2xl text-xl" aria-hidden="true">◌</div>
+            <h2 class="mt-4 text-sm font-bold text-ark-text">Nenhum conteúdo disponível.</h2>
+            <p class="mt-2 text-xs text-ark-muted">Os resultados serão carregados pelo backend.</p>
+          </div>
         </section>
 
         <!-- MARKETPLACE -->
         <section id="screen-marketplace" class="screen hidden space-y-5">
-          <div class="card rounded-3xl p-5 sm:p-6">
+          <div class="panel edge-line rounded-2xl p-5 sm:p-6">
             <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-              <div><p class="text-xs font-extrabold uppercase tracking-[.2em] text-ark-gold">Marketplace</p><h1 class="mt-2 text-2xl font-black">Encontre o que precisa</h1></div>
-              <button type="button" class="rounded-xl border border-white/8 px-4 py-2.5 text-xs font-bold text-white/55 hover:bg-white/[.03] hover:text-white" onclick="toggleFilters()">Filtros</button>
+              <div>
+                <p class="text-[10px] font-extrabold uppercase tracking-[.24em] text-ark-amber">Marketplace</p>
+                <h1 class="mt-2 text-2xl font-black tracking-tight">Encontre o que precisa</h1>
+              </div>
+              <button type="button" class="rounded-xl border border-[#665F50]/20 bg-[#141C16]/70 px-4 py-2.5 text-xs font-bold text-ark-muted hover:border-ark-stone/35 hover:text-ark-text" onclick="toggleFilters()">Filtros</button>
             </div>
-            <div class="mt-5"><label for="market-search" class="sr-only">Pesquisar no Marketplace</label><input id="market-search" type="search" class="focus-ring w-full rounded-2xl border border-white/8 bg-black/10 px-4 py-3 text-sm placeholder:text-white/25" placeholder="Pesquisar no Marketplace"></div>
+            <div class="mt-5">
+              <label for="market-search" class="sr-only">Pesquisar no Marketplace</label>
+              <input id="market-search" type="search" class="field focus-ring w-full rounded-xl px-4 py-3 text-sm" placeholder="Pesquisar no Marketplace">
+            </div>
             <div id="market-filters" class="mt-4 flex flex-wrap gap-2"></div>
           </div>
-          <div class="card min-h-56 rounded-3xl p-8 text-center"><h2 class="text-sm font-bold">Nenhum anúncio disponível.</h2><p class="mt-2 text-xs text-white/35">Os anúncios reais serão carregados pelo backend.</p></div>
+          <div class="panel min-h-60 rounded-2xl p-8 text-center">
+            <div class="empty-icon mx-auto grid h-14 w-14 place-items-center rounded-2xl text-xl" aria-hidden="true">◇</div>
+            <h2 class="mt-4 text-sm font-bold text-ark-text">Nenhum anúncio disponível.</h2>
+            <p class="mt-2 text-xs text-ark-muted">Os anúncios reais serão carregados pelo backend.</p>
+          </div>
         </section>
 
         <!-- MESSAGES -->
         <section id="screen-messages" class="screen hidden">
-          <div class="grid min-h-[620px] overflow-hidden rounded-3xl border border-white/7 bg-ark-900/70 md:grid-cols-[260px_minmax(0,1fr)]">
-            <aside class="border-b border-white/7 md:border-b-0 md:border-r">
-              <div class="border-b border-white/7 p-4"><h2 class="text-lg font-black">Conversas</h2></div>
-              <div class="grid min-h-48 place-items-center p-6 text-center"><p class="text-xs text-white/35">Nenhuma conversa disponível.</p></div>
+          <div class="panel grid min-h-[620px] overflow-hidden rounded-2xl md:grid-cols-[260px_minmax(0,1fr)]">
+            <aside class="border-b border-[#665F50]/15 md:border-b-0 md:border-r">
+              <div class="border-b border-[#665F50]/15 p-4"><h2 class="text-lg font-black">Conversas</h2></div>
+              <div class="grid min-h-48 place-items-center p-6 text-center"><p class="text-xs text-ark-muted">Nenhuma conversa disponível.</p></div>
             </aside>
             <div class="flex min-h-[620px] flex-col">
-              <div class="flex flex-1 items-center justify-center p-8 text-center"><div><div class="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-white/[.03] text-white/30" aria-hidden="true">✉</div><h2 class="mt-4 text-sm font-bold">Selecione uma conversa para começar.</h2></div></div>
-              <form id="message-form" class="border-t border-white/7 p-3" onsubmit="handleMessage(event)">
+              <div class="flex flex-1 items-center justify-center p-8 text-center">
+                <div>
+                  <div class="empty-icon mx-auto grid h-14 w-14 place-items-center rounded-2xl text-xl" aria-hidden="true">✉</div>
+                  <h2 class="mt-4 text-sm font-bold text-ark-text">Selecione uma conversa para começar.</h2>
+                </div>
+              </div>
+              <form id="message-form" class="border-t border-[#665F50]/15 p-3" onsubmit="handleMessage(event)">
                 <div class="flex gap-2">
                   <label for="message-input" class="sr-only">Mensagem</label>
-                  <input id="message-input" type="text" required class="focus-ring min-w-0 flex-1 rounded-xl border border-white/8 bg-black/10 px-4 py-3 text-sm placeholder:text-white/25" placeholder="Digite uma mensagem...">
-                  <button type="submit" class="btn-primary rounded-xl px-4 text-sm font-extrabold text-white">Enviar</button>
+                  <input id="message-input" type="text" required class="field focus-ring min-w-0 flex-1 rounded-xl px-4 py-3 text-sm" placeholder="Digite uma mensagem...">
+                  <button type="submit" class="btn-primary rounded-xl px-4 text-sm font-extrabold transition">Enviar</button>
                 </div>
               </form>
             </div>
@@ -223,44 +402,61 @@
 
         <!-- COMMUNITY -->
         <section id="screen-community" class="screen hidden space-y-5">
-          <div class="card rounded-3xl p-5 sm:p-6">
-            <p class="text-xs font-extrabold uppercase tracking-[.2em] text-ark-400">Comunidade</p>
-            <h1 class="mt-2 text-2xl font-black">Encontre sua comunidade</h1>
-            <div class="mt-5 grid gap-3 sm:grid-cols-[1fr_auto]"><input id="community-search" type="search" class="focus-ring rounded-2xl border border-white/8 bg-black/10 px-4 py-3 text-sm placeholder:text-white/25" placeholder="Pesquisar comunidade"><button type="button" class="rounded-2xl border border-white/8 px-5 py-3 text-sm font-bold text-white/55 hover:bg-white/[.03] hover:text-white" onclick="toggleCommunityFilters()">Filtros</button></div>
+          <div class="panel edge-line rounded-2xl p-5 sm:p-6">
+            <p class="text-[10px] font-extrabold uppercase tracking-[.24em] text-ark-amber">Comunidade</p>
+            <h1 class="mt-2 text-2xl font-black tracking-tight">Encontre sua comunidade</h1>
+            <div class="mt-5 grid gap-3 sm:grid-cols-[1fr_auto]">
+              <input id="community-search" type="search" class="field focus-ring rounded-xl px-4 py-3 text-sm" placeholder="Pesquisar comunidade">
+              <button type="button" class="rounded-xl border border-[#665F50]/20 bg-[#141C16]/70 px-5 py-3 text-sm font-bold text-ark-muted hover:border-ark-stone/35 hover:text-ark-text" onclick="toggleCommunityFilters()">Filtros</button>
+            </div>
           </div>
-          <div class="card min-h-56 rounded-3xl p-8 text-center"><h2 class="text-sm font-bold">Nenhuma comunidade encontrada.</h2><p class="mt-2 text-xs text-white/35">As comunidades reais aparecerão aqui após a integração com o backend.</p></div>
+          <div class="panel min-h-60 rounded-2xl p-8 text-center">
+            <div class="empty-icon mx-auto grid h-14 w-14 place-items-center rounded-2xl text-xl" aria-hidden="true">♧</div>
+            <h2 class="mt-4 text-sm font-bold text-ark-text">Nenhuma comunidade encontrada.</h2>
+            <p class="mt-2 text-xs text-ark-muted">As comunidades reais aparecerão aqui após a integração com o backend.</p>
+          </div>
         </section>
 
         <!-- SETTINGS -->
         <section id="screen-settings" class="screen hidden space-y-5">
-          <div class="card rounded-3xl p-5 sm:p-6"><p class="text-xs font-extrabold uppercase tracking-[.2em] text-ark-400">Configurações</p><h1 class="mt-2 text-2xl font-black">Preferências</h1></div>
+          <div class="panel edge-line rounded-2xl p-5 sm:p-6">
+            <p class="text-[10px] font-extrabold uppercase tracking-[.24em] text-ark-amber">Configurações</p>
+            <h1 class="mt-2 text-2xl font-black tracking-tight">Preferências</h1>
+          </div>
           <div class="grid gap-3">
-            <button type="button" class="card flex items-center justify-between rounded-2xl p-5 text-left hover:bg-white/[.03]" onclick="console.log('Conta')"><span><span class="block text-sm font-bold">Conta</span><span class="mt-1 block text-xs text-white/35">Configurações da conta.</span></span><span class="text-white/30">›</span></button>
-            <button type="button" class="card flex items-center justify-between rounded-2xl p-5 text-left hover:bg-white/[.03]" onclick="console.log('Privacidade')"><span><span class="block text-sm font-bold">Privacidade</span><span class="mt-1 block text-xs text-white/35">Preferências de privacidade.</span></span><span class="text-white/30">›</span></button>
-            <button type="button" class="card flex items-center justify-between rounded-2xl p-5 text-left hover:bg-white/[.03]" onclick="console.log('Segurança')"><span><span class="block text-sm font-bold">Segurança</span><span class="mt-1 block text-xs text-white/35">Configurações de segurança.</span></span><span class="text-white/30">›</span></button>
-            <button type="button" class="card flex items-center justify-between rounded-2xl p-5 text-left hover:bg-white/[.03]" onclick="console.log('Notificações')"><span><span class="block text-sm font-bold">Notificações</span><span class="mt-1 block text-xs text-white/35">Preferências de notificações.</span></span><span class="text-white/30">›</span></button>
-            <button type="button" class="card flex items-center justify-between rounded-2xl p-5 text-left hover:bg-white/[.03]" onclick="console.log('Aparência')"><span><span class="block text-sm font-bold">Aparência</span><span class="mt-1 block text-xs text-white/35">Preferências visuais.</span></span><span class="text-white/30">›</span></button>
+            <button type="button" class="panel flex items-center justify-between rounded-xl p-5 text-left transition hover:border-ark-stone/30" onclick="console.log('Conta')"><span><span class="block text-sm font-bold">Conta</span><span class="mt-1 block text-xs text-ark-muted">Configurações da conta.</span></span><span class="text-ark-stone">›</span></button>
+            <button type="button" class="panel flex items-center justify-between rounded-xl p-5 text-left transition hover:border-ark-stone/30" onclick="console.log('Privacidade')"><span><span class="block text-sm font-bold">Privacidade</span><span class="mt-1 block text-xs text-ark-muted">Preferências de privacidade.</span></span><span class="text-ark-stone">›</span></button>
+            <button type="button" class="panel flex items-center justify-between rounded-xl p-5 text-left transition hover:border-ark-stone/30" onclick="console.log('Segurança')"><span><span class="block text-sm font-bold">Segurança</span><span class="mt-1 block text-xs text-ark-muted">Configurações de segurança.</span></span><span class="text-ark-stone">›</span></button>
+            <button type="button" class="panel flex items-center justify-between rounded-xl p-5 text-left transition hover:border-ark-stone/30" onclick="console.log('Notificações')"><span><span class="block text-sm font-bold">Notificações</span><span class="mt-1 block text-xs text-ark-muted">Preferências de notificações.</span></span><span class="text-ark-stone">›</span></button>
+            <button type="button" class="panel flex items-center justify-between rounded-xl p-5 text-left transition hover:border-ark-stone/30" onclick="console.log('Aparência')"><span><span class="block text-sm font-bold">Aparência</span><span class="mt-1 block text-xs text-ark-muted">Preferências visuais.</span></span><span class="text-ark-stone">›</span></button>
           </div>
         </section>
       </main>
 
-      <!-- RIGHT SIDEBAR / EMPTY RESERVED AREAS -->
+      <!-- RIGHT RESERVED AREA -->
       <aside class="hidden lg:block">
         <div class="space-y-4">
-          <div class="card rounded-3xl p-5"><p class="text-xs font-extrabold uppercase tracking-[.2em] text-white/30">Espaço reservado</p><h2 class="mt-2 text-sm font-bold">Conteúdo da comunidade</h2><div class="mt-4 h-24 rounded-2xl border border-dashed border-white/10"></div></div>
-          <div class="card rounded-3xl p-5"><p class="text-xs font-extrabold uppercase tracking-[.2em] text-white/30">Espaço reservado</p><div class="mt-4 h-20 rounded-2xl border border-dashed border-white/10"></div></div>
+          <div class="panel edge-line rounded-2xl p-5">
+            <p class="text-[10px] font-extrabold uppercase tracking-[.22em] text-ark-stone">Espaço reservado</p>
+            <h2 class="mt-2 text-sm font-bold text-ark-text">Conteúdo da comunidade</h2>
+            <div class="mt-4 h-24 rounded-xl border border-dashed border-ark-stone/20 bg-[#0D120F]/30"></div>
+          </div>
+          <div class="panel rounded-2xl p-5">
+            <p class="text-[10px] font-extrabold uppercase tracking-[.22em] text-ark-stone">Espaço reservado</p>
+            <div class="mt-4 h-20 rounded-xl border border-dashed border-ark-stone/20 bg-[#0D120F]/30"></div>
+          </div>
         </div>
       </aside>
     </div>
 
     <!-- MOBILE NAV -->
-    <nav class="fixed bottom-0 left-0 right-0 z-50 border-t border-white/7 bg-ark-950/95 px-2 py-2 backdrop-blur-xl lg:hidden" aria-label="Navegação móvel">
+    <nav class="fixed bottom-0 left-0 right-0 z-50 border-t border-[#665F50]/18 bg-ark-900/97 px-2 py-2 backdrop-blur-xl lg:hidden" aria-label="Navegação móvel">
       <div class="mx-auto grid max-w-lg grid-cols-5 gap-1">
         <button type="button" data-screen="feed" onclick="showScreen('feed')" class="mobile-nav rounded-xl py-2 text-center text-[10px] font-bold text-ark-400"><span class="block text-lg">⌂</span>Home</button>
-        <button type="button" data-screen="explore" onclick="showScreen('explore')" class="mobile-nav rounded-xl py-2 text-center text-[10px] font-bold text-white/45"><span class="block text-lg">◌</span>Explorar</button>
-        <button type="button" data-screen="marketplace" onclick="showScreen('marketplace')" class="mobile-nav rounded-xl py-2 text-center text-[10px] font-bold text-white/45"><span class="block text-lg">◇</span>Market</button>
-        <button type="button" data-screen="messages" onclick="showScreen('messages')" class="mobile-nav rounded-xl py-2 text-center text-[10px] font-bold text-white/45"><span class="block text-lg">✉</span>Chat</button>
-        <button type="button" data-screen="settings" onclick="showScreen('settings')" class="mobile-nav rounded-xl py-2 text-center text-[10px] font-bold text-white/45"><span class="block text-lg">⚙</span>Conta</button>
+        <button type="button" data-screen="explore" onclick="showScreen('explore')" class="mobile-nav rounded-xl py-2 text-center text-[10px] font-bold text-ark-muted"><span class="block text-lg">◌</span>Explorar</button>
+        <button type="button" data-screen="marketplace" onclick="showScreen('marketplace')" class="mobile-nav rounded-xl py-2 text-center text-[10px] font-bold text-ark-muted"><span class="block text-lg">◇</span>Market</button>
+        <button type="button" data-screen="messages" onclick="showScreen('messages')" class="mobile-nav rounded-xl py-2 text-center text-[10px] font-bold text-ark-muted"><span class="block text-lg">✉</span>Chat</button>
+        <button type="button" data-screen="settings" onclick="showScreen('settings')" class="mobile-nav rounded-xl py-2 text-center text-[10px] font-bold text-ark-muted"><span class="block text-lg">⚙</span>Conta</button>
       </div>
     </nav>
   </div>
@@ -272,10 +468,12 @@
       const login = mode === 'login';
       document.querySelector('#login-form').classList.toggle('hidden', !login);
       document.querySelector('#register-form').classList.toggle('hidden', login);
-      document.querySelector('#tab-login').classList.toggle('bg-white/10', login);
-      document.querySelector('#tab-register').classList.toggle('bg-white/10', !login);
-      document.querySelector('#tab-login').classList.toggle('text-white/45', !login);
-      document.querySelector('#tab-register').classList.toggle('text-white/45', login);
+      document.querySelector('#tab-login').classList.toggle('border-ark-400', login);
+      document.querySelector('#tab-register').classList.toggle('border-ark-400', !login);
+      document.querySelector('#tab-login').classList.toggle('text-ark-text', login);
+      document.querySelector('#tab-register').classList.toggle('text-ark-text', !login);
+      document.querySelector('#tab-login').classList.toggle('text-ark-muted', !login);
+      document.querySelector('#tab-register').classList.toggle('text-ark-muted', login);
       document.querySelector('#tab-login').setAttribute('aria-selected', String(login));
       document.querySelector('#tab-register').setAttribute('aria-selected', String(!login));
     }
@@ -325,30 +523,30 @@
       document.querySelectorAll('.nav-item').forEach((item) => {
         const active = item.dataset.screen === screen;
         item.classList.toggle('nav-active', active);
-        item.classList.toggle('text-white/50', !active);
+        item.classList.toggle('text-ark-muted', !active);
         item.setAttribute('aria-current', active ? 'page' : 'false');
       });
 
       document.querySelectorAll('.mobile-nav').forEach((item) => {
         const active = item.dataset.screen === screen;
         item.classList.toggle('text-ark-400', active);
-        item.classList.toggle('text-white/45', !active);
+        item.classList.toggle('text-ark-muted', !active);
       });
     }
 
     function renderMarketplaceCategories() {
       document.querySelector('#market-filters').innerHTML = marketplaceCategories.map((category, index) => `
-        <button type="button" class="market-category rounded-full border px-4 py-2 text-xs font-bold ${index === 0 ? 'border-ark-400/30 bg-ark-400/10 text-ark-400' : 'border-white/8 bg-white/[.02] text-white/45'}" onclick="selectMarketplaceCategory(this)">${category}</button>
+        <button type="button" class="market-category rounded-full border px-4 py-2 text-xs font-bold ${index === 0 ? 'category-active' : 'category-idle'}" onclick="selectMarketplaceCategory(this)">${category}</button>
       `).join('');
     }
 
     function selectMarketplaceCategory(button) {
       document.querySelectorAll('.market-category').forEach((item) => {
-        item.classList.remove('border-ark-400/30', 'bg-ark-400/10', 'text-ark-400');
-        item.classList.add('border-white/8', 'bg-white/[.02]', 'text-white/45');
+        item.classList.remove('category-active');
+        item.classList.add('category-idle');
       });
-      button.classList.remove('border-white/8', 'bg-white/[.02]', 'text-white/45');
-      button.classList.add('border-ark-400/30', 'bg-ark-400/10', 'text-ark-400');
+      button.classList.remove('category-idle');
+      button.classList.add('category-active');
     }
 
     function toggleFilters() {
