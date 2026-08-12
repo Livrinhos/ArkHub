@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ArkHub — comunidade gamer para sobreviventes de ARK: Survival Ascended." />
+  <title>ArkHub — Community for Survivors</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ark: {
+              950: '#0B0F0C', 900: '#111814', 800: '#18221A', 700: '#24352A',
+              600: '#3F6B3F', 500: '#5D8A4C', 400: '#6FAF45', gold: '#C99A3D',
+              ink: '#E8E8E8', muted: '#9DA79F'
+            }
+          },
+          boxShadow: {
+            panel: '0 20px 60px rgba(0,0,0,.22)',
+            glow: '0 0 0 1px rgba(111,175,69,.15), 0 18px 55px rgba(0,0,0,.26)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background: #0B0F0C; color: #E8E8E8; }
+    ::selection { background: rgba(111,175,69,.35); color: #fff; }
+    .glass { background: rgba(17,24,20,.82); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+    .noise::before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.035; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E"); z-index:40; }
+    .auth-bg { background: radial-gradient(circle at 20% 20%, rgba(111,175,69,.18), transparent 34%), radial-gradient(circle at 82% 14%, rgba(201,154,61,.14), transparent 28%), linear-gradient(135deg,#0B0F0C 0%,#111814 48%,#0B0F0C 100%); }
+    .auth-bg::before { content:""; position:absolute; inset:0; background: linear-gradient(90deg, rgba(11,15,12,.82), rgba(11,15,12,.48)), url('https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1800&q=80') center/cover; opacity:.32; }
+    .leaf-grid { background-image: linear-gradient(rgba(111,175,69,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(111,175,69,.05) 1px, transparent 1px); background-size: 44px 44px; }
+    .nav-active { background: linear-gradient(90deg, rgba(111,175,69,.18), rgba(111,175,69,.03)); color:#fff; box-shadow: inset 2px 0 0 #6FAF45; }
+    .btn-primary { background: linear-gradient(135deg,#6FAF45,#4F7F3E); box-shadow: 0 10px 28px rgba(111,175,69,.18); }
+    .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .card { border:1px solid rgba(255,255,255,.07); background:rgba(17,24,20,.86); }
+    .card:hover { border-color: rgba(111,175,69,.22); }
+    .scrollbar-hide::-webkit-scrollbar { display:none; }
+    .scrollbar-hide { -ms-overflow-style:none; scrollbar-width:none; }
+    .focus-ring:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline:2px solid #6FAF45; outline-offset:2px; }
+    .line-clamp-2 { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .post-image { aspect-ratio: 16/9; object-fit:cover; }
+    @media (max-width: 1023px) { .desktop-only { display:none!important; } }
+    @media (max-width: 767px) { .mobile-compact { padding:.875rem!important; } }
+  </style>
+</head>
+<body class="min-h-screen noise selection:bg-ark-400/30">
+  <div id="toast" class="fixed right-4 top-4 z-[90] hidden max-w-sm rounded-2xl border border-ark-400/30 bg-ark-900/95 px-4 py-3 text-sm shadow-2xl backdrop-blur-xl" role="status" aria-live="polite"></div>
+
+  <section id="auth-screen" class="auth-bg relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-8">
+    <div class="absolute inset-0 leaf-grid opacity-40"></div>
+    <div class="relative z-10 grid w-full max-w-6xl overflow-hidden rounded-[32px] border border-white/10 bg-black/20 shadow-2xl backdrop-blur-sm lg:grid-cols-[1.15fr_.85fr]">
+      <div class="hidden min-h-[720px] flex-col justify-between p-10 lg:flex xl:p-14">
+        <div>
+          <div class="mb-10 flex items-center gap-3">
+            <div class="grid h-12 w-12 place-items-center rounded-2xl border border-ark-400/30 bg-ark-500/10 text-ark-400 shadow-glow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="h-7 w-7 fill-none stroke-current" stroke-width="1.7"><path d="M5 19c4-3 5-8 5-14 3 2 4 4 4 7 2-1 3-2 4-5 2 4 2 8-1 11-2 2-5 3-8 2Z"/><path d="M9 20c1-3 3-5 7-7"/></svg>
+            </div>
+            <span class="text-2xl font-black tracking-tight">Ark<span class="text-ark-400">Hub</span></span>
+          </div>
+          <p class="mb-5 max-w-xl text-sm font-semibold uppercase tracking-[.28em] text-ark-400">The survivor network</p>
+          <h1 class="max-w-3xl text-5xl font-black leading-[1.02] tracking-tight xl:text-7xl">Sua tribo.<br><span class="text-ark-400">Seu mundo.</span></h1>
+          <p class="mt-6 max-w-xl text-lg leading-8 text-white/65">Compartilhe conquistas, encontre parceiros de raid, negocie criaturas e fique conectado à comunidade de ARK: Survival Ascended.</p>
+        </div>
+        <div class="flex flex-wrap gap-3 text-xs font-semibold text-white/50">
+          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2">Comunidade gamer</span>
+          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2">Marketplace</span>
+          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2">Chat privado</span>
+        </div>
+      </div>
+
+      <div class="glass p-6 sm:p-8 lg:p-10">
+        <div class="mx-auto w-full max-w-md">
+          <div class="mb-8 lg:hidden">
+            <div class="mb-4 flex items-center gap-3">
+              <div class="grid h-11 w-11 place-items-center rounded-2xl bg-ark-500/10 text-ark-400" aria-hidden="true"><span class="text-xl">◈</span></div>
+              <span class="text-2xl font-black">Ark<span class="text-ark-400">Hub</span></span>
+            </div>
+            <p class="text-sm text-white/60">A rede social dos sobreviventes.</p>
+          </div>
+
+          <div class="mb-7">
+            <div class="grid grid-cols-2 rounded-2xl border border-white/10 bg-black/20 p-1" role="tablist" aria-label="Autenticação">
+              <button id="tab-login" type="button" role="tab" aria-selected="true" class="rounded-xl px-4 py-2.5 text-sm font-bold transition bg-white/10 text-white" onclick="toggleAuth('login')">Entrar</button>
+              <button id="tab-register" type="button" role="tab" aria-selected="false" class="rounded-xl px-4 py-2.5 text-sm font-bold text-white/45 transition hover:text-white" onclick="toggleAuth('register')">Criar conta</button>
+            </div>
+          </div>
+
+          <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5" novalidate>
+            <div><label for="login" class="mb-2 block text-sm font-semibold text-white/75">Login ou e-mail</label><input id="login" name="login" autocomplete="username" required class="focus-ring w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3.5 text-sm text-white placeholder:text-white/25" placeholder="ex: raptorking" /></div>
+            <div><label for="password" class="mb-2 block text-sm font-semibold text-white/75">Senha</label><input id="password" name="password" type="password" autocomplete="current-password" required class="focus-ring w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3.5 text-sm text-white placeholder:text-white/25" placeholder="••••••••" /></div>
+            <div class="flex items-center justify-between text-xs text-white/45"><label class="flex items-center gap-2"><input type="checkbox" class="rounded border-white/20 bg-black/20 text-ark-400 focus:ring-ark-400" /> Lembrar de mim</label><button type="button" class="hover:text-white" onclick="showToast('Recuperação de senha ainda está apenas no protótipo.')">Esqueci minha senha</button></div>
+            <button type="submit" class="btn-primary w-full rounded-2xl px-5 py-3.5 text-sm font-extrabold text-white transition">Entrar no ArkHub</button>
+          </form>
+
+          <form id="register-form" onsubmit="handleRegister(event)" class="hidden space-y-4" novalidate>
+            <div><label for="register-name" class="mb-2 block text-sm font-semibold text-white/75">Nome</label><input id="register-name" name="name" required class="focus-ring w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3.5 text-sm" placeholder="Seu nome" /></div>
+            <div><label for="register-email" class="mb-2 block text-sm font-semibold text-white/75">E-mail</label><input id="register-email" name="email" type="email" required class="focus-ring w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3.5 text-sm" placeholder="voce@email.com" /></div>
+            <div><label for="register-login" class="mb-2 block text-sm font-semibold text-white/75">Login</label><input id="register-login" name="login" required class="focus-ring w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3.5 text-sm" placeholder="seu_username" /></div>
+            <div class="grid gap-4 sm:grid-cols-2"><div><label for="register-password" class="mb-2 block text-sm font-semibold text-white/75">Senha</label><input id="register-password" name="password" type="password" required class="focus-ring w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3.5 text-sm" placeholder="••••••••" /></div><div><label for="register-confirm" class="mb-2 block text-sm font-semibold text-white/75">Confirmar senha</label><input id="register-confirm" name="confirm" type="password" required class="focus-ring w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3.5 text-sm" placeholder="••••••••" /></div></div>
+            <button type="submit" class="btn-primary mt-2 w-full rounded-2xl px-5 py-3.5 text-sm font-extrabold text-white transition">Criar conta</button>
+          </form>
+
+          <p class="mt-7 text-center text-xs leading-5 text-white/35">Protótipo frontend • sem autenticação real • dados ficam apenas no navegador.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="app-shell" class="hidden min-h-screen bg-ark-950">
+    <header class="sticky top-0 z-50 border-b border-white/6 bg-ark-950/88 backdrop-blur-xl">
+      <div class="mx-auto flex h-16 max-w-[1500px] items-center justify-between gap-4 px-4 lg:px-6">
+        <button class="flex items-center gap-3" onclick="showScreen('feed')" aria-label="Ir para Home">
+          <div class="grid h-10 w-10 place-items-center rounded-xl border border-ark-400/20 bg-ark-500/10 text-ark-400"><span class="text-xl" aria-hidden="true">◈</span></div>
+          <span class="text-lg font-black tracking-tight">Ark<span class="text-ark-400">Hub</span></span>
+        </button>
+        <div class="hidden w-full max-w-md md:block"><label class="relative block"><span class="sr-only">Pesquisar</span><input class="focus-ring w-full rounded-2xl border border-white/8 bg-white/[.03] py-2.5 pl-10 pr-4 text-sm placeholder:text-white/25" placeholder="Pesquisar jogadores, tribos, anúncios..."/><span class="absolute left-3 top-1/2 -translate-y-1/2 text-white/35">⌕</span></label></div>
+        <div class="flex items-center gap-2"><button class="focus-ring grid h-10 w-10 place-items-center rounded-xl text-white/60 hover:bg-white/5 hover:text-white" onclick="showToast('Notificações em breve.')" aria-label="Notificações">♢</button><button class="focus-ring grid h-10 w-10 place-items-center rounded-xl border border-white/8 bg-white/[.03] text-sm font-bold text-ark-400" onclick="showToast('Perfil de SurvivorBR')" aria-label="Abrir perfil">S</button></div>
+      </div>
+    </header>
+
+    <div class="mx-auto grid max-w-[1500px] grid-cols-1 gap-5 px-3 py-4 sm:px-4 lg:grid-cols-[220px_minmax(0,1fr)_285px] lg:px-6">
+      <aside class="desktop-only sticky top-20 h-[calc(100vh-6rem)] self-start">
+        <nav class="flex h-full flex-col justify-between rounded-3xl border border-white/6 bg-ark-900/65 p-3" aria-label="Navegação principal">
+          <div>
+            <div class="px-3 pb-3 pt-2 text-[10px] font-extrabold uppercase tracking-[.24em] text-white/25">Navegação</div>
+            <div id="side-nav" class="space-y-1">
+              <button data-screen="feed" onclick="showScreen('feed')" class="nav-item nav-active flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left text-sm font-semibold" aria-current="page"><span>⌂</span> Home</button>
+              <button data-screen="explore" onclick="showScreen('explore')" class="nav-item flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left text-sm font-semibold text-white/55 hover:bg-white/[.03] hover:text-white"><span>◌</span> Explorar</button>
+              <button data-screen="marketplace" onclick="showScreen('marketplace')" class="nav-item flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left text-sm font-semibold text-white/55 hover:bg-white/[.03] hover:text-white"><span>◇</span> Marketplace</button>
+              <button data-screen="messages" onclick="showScreen('messages')" class="nav-item flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left text-sm font-semibold text-white/55 hover:bg-white/[.03] hover:text-white"><span>✉</span> Mensagens <span class="ml-auto rounded-full bg-ark-400/15 px-2 py-0.5 text-[10px] text-ark-400">3</span></button>
+              <button data-screen="community" onclick="showScreen('community')" class="nav-item flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left text-sm font-semibold text-white/55 hover:bg-white/[.03] hover:text-white"><span>♧</span> Comunidade</button>
+              <button data-screen="settings" onclick="showScreen('settings')" class="nav-item flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left text-sm font-semibold text-white/55 hover:bg-white/[.03] hover:text-white"><span>⚙</span> Configurações</button>
+            </div>
+          </div>
+          <div class="rounded-2xl border border-ark-400/10 bg-ark-500/5 p-3"><p class="text-xs font-bold">Temporada ativa</p><p class="mt-1 text-[11px] text-white/40">The Island • Community PvP</p><div class="mt-3 h-1.5 rounded-full bg-black/30"><div class="h-1.5 w-[78%] rounded-full bg-ark-400"></div></div><p class="mt-2 text-[10px] text-white/35">78% da comunidade online</p></div>
+        </nav>
+      </aside>
+
+      <main id="main-content" class="min-w-0 pb-24 lg:pb-6">
+        <section id="screen-feed" class="screen space-y-5">
+          <div class="rounded-3xl border border-ark-400/10 bg-gradient-to-br from-ark-800/85 to-ark-900/80 p-5 shadow-panel sm:p-6">
+            <div class="flex items-start justify-between gap-3"><div><p class="text-xs font-bold uppercase tracking-[.18em] text-ark-400">Feed da comunidade</p><h2 class="mt-1 text-2xl font-black tracking-tight">Bom jogo, sobrevivente.</h2></div><span class="rounded-full border border-white/8 bg-black/10 px-3 py-1 text-[10px] font-bold text-white/45">ONLINE</span></div>
+            <form id="post-form" onsubmit="handlePost(event)" class="mt-5" novalidate><label for="post-content" class="sr-only">Nova publicação</label><textarea id="post-content" rows="3" required class="focus-ring w-full resize-none rounded-2xl border border-white/8 bg-black/15 p-4 text-sm placeholder:text-white/25" placeholder="O que está acontecendo na sua tribo?"></textarea><div class="mt-3 flex items-center justify-between gap-2"><div class="flex gap-2"><button type="button" class="rounded-xl border border-white/8 px-3 py-2 text-xs font-bold text-white/50 hover:text-white" onclick="showToast('Anexos estão disponíveis somente no protótipo.')">+ Mídia</button><button type="button" class="rounded-xl border border-white/8 px-3 py-2 text-xs font-bold text-white/50 hover:text-white" onclick="showToast('Tags: #Rex #PvP #Tek #Aberration #Ragnarok')"># Tags</button></div><button id="btn-publish" type="submit" class="btn-primary rounded-xl px-4 py-2 text-xs font-extrabold text-white transition">Publicar</button></div></form>
+          </div>
+          <div id="feed-container" class="space-y-5"></div>
+        </section>
+
+        <section id="screen-marketplace" class="screen hidden space-y-5">
+          <div class="rounded-3xl border border-white/7 bg-ark-900/80 p-5 sm:p-6"><p class="text-xs font-extrabold uppercase tracking-[.2em] text-ark-gold">Trading post</p><div class="mt-2 flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><h2 class="text-3xl font-black">Marketplace</h2><p class="mt-2 max-w-2xl text-sm leading-6 text-white/50">Encontre dinos, itens, blueprints e serviços para sua aventura.</p></div><button class="btn-primary rounded-xl px-4 py-2.5 text-sm font-extrabold" onclick="showToast('O formulário de anúncio estará disponível na próxima etapa.')">+ Criar anúncio</button></div><div class="scrollbar-hide mt-5 flex gap-2 overflow-x-auto pb-1" id="market-filters"></div></div>
+          <div id="market-grid" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3"></div>
+        </section>
+
+        <section id="screen-messages" class="screen hidden">
+          <div class="grid min-h-[680px] overflow-hidden rounded-3xl border border-white/7 bg-ark-900/80 md:grid-cols-[260px_minmax(0,1fr)]">
+            <aside class="border-b border-white/7 md:border-b-0 md:border-r"><div class="border-b border-white/7 p-4"><h2 class="text-xl font-black">Mensagens</h2><p class="mt-1 text-xs text-white/40">Converse com sua tribo.</p></div><div id="conversation-list" class="divide-y divide-white/5"></div></aside>
+            <div class="flex min-h-[680px] flex-col"><div id="chat-header" class="border-b border-white/7 p-4"></div><div id="chat-messages" class="flex-1 space-y-3 overflow-y-auto p-4"></div><form id="chat-form" onsubmit="handleChat(event)" class="border-t border-white/7 p-3"><div class="flex gap-2"><label for="chat-input" class="sr-only">Digite uma mensagem</label><input id="chat-input" class="focus-ring min-w-0 flex-1 rounded-xl border border-white/8 bg-black/20 px-4 py-3 text-sm" placeholder="Digite uma mensagem..." required /><button type="submit" class="btn-primary rounded-xl px-4 text-sm font-extrabold">Enviar</button></div></form></div>
+          </div>
+        </section>
+
+        <section id="screen-explore" class="screen hidden space-y-5"><div class="rounded-3xl border border-white/7 bg-ark-900/80 p-6"><p class="text-xs font-bold uppercase tracking-[.2em] text-ark-400">Descobrir</p><h2 class="mt-2 text-3xl font-black">Explorar</h2><p class="mt-2 text-sm text-white/45">Encontre comunidades, jogadores e discussões em alta.</p></div><div id="explore-grid" class="grid gap-4 sm:grid-cols-2"></div></section>
+        <section id="screen-community" class="screen hidden space-y-5"><div class="rounded-3xl border border-white/7 bg-ark-900/80 p-6"><p class="text-xs font-bold uppercase tracking-[.2em] text-ark-gold">Tribo global</p><h2 class="mt-2 text-3xl font-black">Comunidade</h2><p class="mt-2 text-sm text-white/45">Os lugares onde os sobreviventes se encontram.</p></div><div id="community-grid" class="grid gap-4 md:grid-cols-2"></div></section>
+        <section id="screen-settings" class="screen hidden space-y-5"><div class="rounded-3xl border border-white/7 bg-ark-900/80 p-6"><p class="text-xs font-bold uppercase tracking-[.2em] text-ark-400">Conta</p><h2 class="mt-2 text-3xl font-black">Configurações</h2><div class="mt-6 space-y-3"><button class="flex w-full items-center justify-between rounded-2xl border border-white/7 bg-black/10 p-4 text-left hover:bg-white/[.02]" onclick="showToast('Preferências salvas localmente.')"><span><span class="block text-sm font-bold">Modo compacto</span><span class="mt-1 block text-xs text-white/40">Reduz o espaçamento dos cartões.</span></span><span class="h-6 w-11 rounded-full bg-ark-400/20 p-1"><span class="block h-4 w-4 rounded-full bg-white/80"></span></span></button><button class="flex w-full items-center justify-between rounded-2xl border border-white/7 bg-black/10 p-4 text-left hover:bg-white/[.02]" onclick="showToast('Notificações configuradas para o protótipo.')"><span><span class="block text-sm font-bold">Notificações</span><span class="mt-1 block text-xs text-white/40">Receber novidades da comunidade.</span></span><span class="text-xs font-bold text-ark-400">ATIVO</span></button><button class="flex w-full items-center justify-between rounded-2xl border border-red-400/10 bg-red-500/[.02] p-4 text-left hover:bg-red-500/[.04]" onclick="logout()"><span><span class="block text-sm font-bold text-red-200">Sair do ArkHub</span><span class="mt-1 block text-xs text-white/40">Voltar para a tela de autenticação.</span></span><span>↪</span></button></div></div></section>
+      </main>
+
+      <aside class="desktop-only sticky top-20 h-[calc(100vh-6rem)] self-start space-y-4 overflow-y-auto pr-1">
+        <div class="card rounded-3xl p-4"><div class="mb-3 flex items-center justify-between"><h3 class="text-sm font-black">Servidores populares</h3><button class="text-[11px] text-ark-400" onclick="showToast('Lista completa em breve.')">Ver todos</button></div><div id="server-list" class="space-y-3"></div></div>
+        <div class="card rounded-3xl p-4"><h3 class="text-sm font-black">Tendências</h3><div id="trend-list" class="mt-3 flex flex-wrap gap-2"></div></div>
+        <div class="card rounded-3xl p-4"><div class="mb-3 flex items-center justify-between"><h3 class="text-sm font-black">Jogadores em destaque</h3><span class="text-[10px] text-white/35">esta semana</span></div><div id="player-list" class="space-y-3"></div></div>
+      </aside>
+    </div>
+
+    <nav class="fixed bottom-0 left-0 right-0 z-50 border-t border-white/7 bg-ark-950/95 px-2 py-2 backdrop-blur-xl lg:hidden" aria-label="Navegação móvel"><div class="mx-auto grid max-w-md grid-cols-5 gap-1"><button data-screen="feed" onclick="showScreen('feed')" class="mobile-nav rounded-xl py-2 text-center text-[10px] font-bold text-ark-400"><span class="block text-lg">⌂</span>Home</button><button data-screen="explore" onclick="showScreen('explore')" class="mobile-nav rounded-xl py-2 text-center text-[10px] font-bold text-white/45"><span class="block text-lg">◌</span>Explorar</button><button data-screen="marketplace" onclick="showScreen('marketplace')" class="mobile-nav rounded-xl py-2 text-center text-[10px] font-bold text-white/45"><span class="block text-lg">◇</span>Market</button><button data-screen="messages" onclick="showScreen('messages')" class="mobile-nav rounded-xl py-2 text-center text-[10px] font-bold text-white/45"><span class="block text-lg">✉</span>Chat</button><button data-screen="settings" onclick="showScreen('settings')" class="mobile-nav rounded-xl py-2 text-center text-[10px] font-bold text-white/45"><span class="block text-lg">⚙</span>Conta</button></div></nav>
+  </div>
+
+  <script>
+    const posts = [
+      { id:1, name:'RaptorKing', user:'@raptorking', time:'18 min', avatar:'RK', image:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=82', text:'Finalmente saímos da caverna com 12 ovos de Rex e uma linhagem nova. O breeding da tribo está ficando absurdo. 🦖', likes:284, comments:31, shares:12, liked:false },
+      { id:2, name:'AlphaTribe', user:'@alphatribe', time:'41 min', avatar:'AT', image:'https://images.unsplash.com/photo-1519817650390-64a93db511aa?auto=format&fit=crop&w=1200&q=82', text:'Base pronta em Aberration. Foco agora é montar a linha de reapers e preparar o próximo PvP. Quem joga no servidor BR-Pulse?', likes:178, comments:22, shares:8, liked:false },
+      { id:3, name:'DinoMaster', user:'@dinomaster', time:'1 h', avatar:'DM', image:'https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=1200&q=82', text:'Guia rápido: não subestime o peso de uma boa estratégia de farming. Hoje foram 5k de metal antes do café. 😅', likes:412, comments:54, shares:21, liked:false },
+      { id:4, name:'SurvivorBR', user:'@survivorbr', time:'2 h', avatar:'SB', image:'https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1200&q=82', text:'Domamos um Giga com 100% de eficiência. Agora só falta achar um nome à altura desse monstro.', likes:356, comments:43, shares:17, liked:false },
+      { id:5, name:'TekHunter', user:'@tekhunter', time:'3 h', avatar:'TH', image:'https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1200&q=82', text:'Tek cave concluída. O loot veio forte e já estamos organizando blueprint para a próxima raid.', likes:229, comments:27, shares:9, liked:false },
+      { id:6, name:'RexQueen', user:'@rexqueen', time:'5 h', avatar:'RQ', image:'https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=1200&q=82', text:'Procuro parceria para breeding de Rexes mutados. Tenho linha de saúde e dano iniciando agora.', likes:147, comments:19, shares:6, liked:false }
+    ];
+
+    const marketItems = [
+      ['Dinossauros','Rex Mutado','Rex 45k HP / 1.2k melee · macho','RaptorKing','Lvl 212','The Island','R$ 45'],
+      ['Dinossauros','Giga Mutado','Linha 100% pronta para breeding','AlphaTribe','Lvl 185','Extinction','R$ 120'],
+      ['Dinossauros','Wyvern Lightning','Fêmea, 100% imprint, sela incluída','DinoMaster','Lvl 230','Fjordur','R$ 80'],
+      ['Blueprints','Blueprint Tek','Blueprint de Rifle Tek • alta qualidade','TekHunter','ASC 126','Aberration','R$ 35'],
+      ['Blueprints','Saddle Blueprint','Rex Saddle • 124 armor','SurvivorBR','124 Armor','Ragnarok','R$ 60'],
+      ['Recursos','Pacote de Recursos','30k metal + 10k polímero','RexQueen','Bundle','The Island','R$ 25'],
+      ['Serviços','Serviço de Criação','Breeding + mutações por encomenda','NexusLab','Custom','PvE / PvP','R$ 40'],
+      ['Dinossauros','Dino de Alta Linhagem','Theri com linha de ataque consolidada','GreenValley','Lvl 218','Lost Island','R$ 95']
+    ];
+
+    const chats = {
+      RaptorKing:{status:'Online', color:'bg-emerald-400', msgs:[['in','Você conseguiu o Rex?'],['out','Sim! Acabei de domar.'],['in','Qual nível?'],['out','212. Depois te mostro a mutação.']]},
+      AlphaTribe:{status:'Online', color:'bg-emerald-400', msgs:[['in','Entramos no servidor às 20h.'],['out','Fechado. Vou levar os dinos.']]},
+      DinoMaster:{status:'Visto recentemente', color:'bg-white/20', msgs:[['in','Olha o blueprint que achei.'],['out','Esse armor tá ótimo!']]},
+      SurvivorBR:{status:'Online', color:'bg-emerald-400', msgs:[['in','Bora fechar a troca hoje?'],['out','Sim, depois do raid.']]},
+      TekHunter:{status:'Visto recentemente', color:'bg-white/20', msgs:[['in','A cave foi absurda.'],['out','Precisamos repetir.']]}
+    };
+
+    let activeChat = 'RaptorKing';
+
+    function showToast(message){ const el=document.querySelector('#toast'); el.textContent=message; el.classList.remove('hidden'); clearTimeout(showToast.t); showToast.t=setTimeout(()=>el.classList.add('hidden'),2600); }
+    function toggleAuth(mode){ const login=mode==='login'; document.querySelector('#login-form').classList.toggle('hidden',!login); document.querySelector('#register-form').classList.toggle('hidden',login); document.querySelector('#tab-login').classList.toggle('bg-white/10',login); document.querySelector('#tab-register').classList.toggle('bg-white/10',!login); document.querySelector('#tab-login').classList.toggle('text-white/45',!login); document.querySelector('#tab-register').classList.toggle('text-white/45',login); document.querySelector('#tab-login').setAttribute('aria-selected',login); document.querySelector('#tab-register').setAttribute('aria-selected',!login); }
+    function handleLogin(event){ event.preventDefault(); const data={login:document.querySelector('#login').value,password:document.querySelector('#password').value}; console.log(data); document.querySelector('#auth-screen').classList.add('hidden'); document.querySelector('#app-shell').classList.remove('hidden'); showScreen('feed'); showToast('Bem-vindo ao ArkHub.'); }
+    function handleRegister(event){ event.preventDefault(); const data={name:document.querySelector('#register-name').value,email:document.querySelector('#register-email').value,login:document.querySelector('#register-login').value}; console.log(data); if(document.querySelector('#register-password').value!==document.querySelector('#register-confirm').value){ showToast('As senhas não coincidem.'); return; } showToast('Conta criada no protótipo. Agora você pode entrar.'); toggleAuth('login'); document.querySelector('#login').value=data.login; }
+    function logout(){ document.querySelector('#app-shell').classList.add('hidden'); document.querySelector('#auth-screen').classList.remove('hidden'); toggleAuth('login'); showToast('Sessão encerrada.'); }
+    function showScreen(screen){ document.querySelectorAll('.screen').forEach(el=>el.classList.add('hidden')); const target=document.querySelector(`#screen-${screen}`); if(target) target.classList.remove('hidden'); document.querySelectorAll('.nav-item').forEach(el=>{ const active=el.dataset.screen===screen; el.classList.toggle('nav-active',active); el.classList.toggle('text-white/55',!active); el.setAttribute('aria-current',active?'page':'false'); }); document.querySelectorAll('.mobile-nav').forEach(el=>{ const active=el.dataset.screen===screen; el.classList.toggle('text-ark-400',active); el.classList.toggle('text-white/45',!active); }); if(screen==='messages') renderChat(activeChat); }
+    function renderPosts(){ const container=document.querySelector('#feed-container'); container.innerHTML=posts.map(p=>`<article class="card rounded-3xl overflow-hidden transition" data-post="${p.id}"><div class="p-4 sm:p-5"><div class="flex items-center justify-between gap-3"><div class="flex min-w-0 items-center gap-3"><div class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-ark-700 text-xs font-black text-ark-ink">${p.avatar}</div><div class="min-w-0"><div class="flex items-center gap-2"><h3 class="truncate text-sm font-extrabold">${p.name}</h3><span class="text-xs text-white/25">${p.user}</span></div><p class="mt-0.5 text-[11px] text-white/35">${p.time} • The Island</p></div></div><button class="rounded-xl px-2 py-1 text-white/35 hover:bg-white/5 hover:text-white" onclick="showToast('Mais opções em breve.')" aria-label="Mais opções da publicação">•••</button></div><p class="mt-4 text-sm leading-6 text-white/76">${p.text}</p></div><img class="post-image w-full border-y border-white/6" src="${p.image}" alt="Cena inspirada na exploração de ARK" loading="lazy"/><div class="p-4 sm:p-5"><div class="flex items-center justify-between border-b border-white/6 pb-3 text-[11px] text-white/35"><span>${p.likes} curtidas</span><span>${p.comments} comentários · ${p.shares} compartilhamentos</span></div><div class="grid grid-cols-3 pt-2"><button class="rounded-xl px-3 py-2 text-xs font-bold transition ${p.liked?'text-ark-400 bg-ark-400/10':'text-white/45 hover:bg-white/[.03] hover:text-white'}" onclick="toggleLike(${p.id})">♡ <span>${p.liked?'Curtido':'Curtir'}</span></button><button class="rounded-xl px-3 py-2 text-xs font-bold text-white/45 hover:bg-white/[.03] hover:text-white" onclick="toggleComments(${p.id})">◌ Comentar</button><button class="rounded-xl px-3 py-2 text-xs font-bold text-white/45 hover:bg-white/[.03] hover:text-white" onclick="sharePost(${p.id})">↗ Compartilhar</button></div><div id="comments-${p.id}" class="mt-3 hidden rounded-2xl bg-black/10 p-3"><div class="space-y-2 text-xs"><p><b class="text-white">GreenValley</b> <span class="text-white/50">Esse breeding ficou muito bom.</span></p><p><b class="text-white">RexQueen</b> <span class="text-white/50">Manda a mutação no chat!</span></p></div><div class="mt-3 flex gap-2"><input aria-label="Adicionar comentário" class="focus-ring min-w-0 flex-1 rounded-xl border border-white/7 bg-black/20 px-3 py-2 text-xs" placeholder="Escreva um comentário..."/><button class="rounded-xl bg-white/5 px-3 text-xs font-bold hover:bg-white/10" onclick="showToast('Comentário adicionado localmente.')">Enviar</button></div></div></div></article>`).join(''); }
+    function toggleLike(id){ const p=posts.find(x=>x.id===id); p.liked=!p.liked; p.likes += p.liked?1:-1; renderPosts(); }
+    function toggleComments(id){ document.querySelector(`#comments-${id}`).classList.toggle('hidden'); }
+    function sharePost(id){ navigator.clipboard?.writeText('ArkHub • publicação #'+id).catch(()=>{}); showToast('Link da publicação copiado (simulado).'); }
+    function handlePost(event){ event.preventDefault(); const content=document.querySelector('#post-content').value.trim(); console.log({content}); if(!content){showToast('Escreva algo antes de publicar.');return;} posts.unshift({id:Date.now(),name:'SurvivorBR',user:'@survivorbr',time:'agora',avatar:'SB',image:'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=82',text:content,likes:0,comments:0,shares:0,liked:false}); document.querySelector('#post-form').reset(); renderPosts(); showToast('Publicação adicionada ao seu feed.'); }
+    function renderMarketplace(){ const filters=['Todos','Dinossauros','Itens','Blueprints','Recursos','Serviços']; const f=document.querySelector('#market-filters'); f.innerHTML=filters.map((x,i)=>`<button onclick="filterMarket('${x}')" data-filter="${x}" class="market-filter rounded-full border px-4 py-2 text-xs font-bold ${i===0?'border-ark-400/30 bg-ark-400/10 text-ark-400':'border-white/8 bg-white/[.02] text-white/45'}">${x}</button>`).join(''); renderMarketItems('Todos'); }
+    function filterMarket(filter){ document.querySelectorAll('.market-filter').forEach(b=>{ const a=b.dataset.filter===filter; b.classList.toggle('border-ark-400/30',a); b.classList.toggle('bg-ark-400/10',a); b.classList.toggle('text-ark-400',a); b.classList.toggle('border-white/8',!a); b.classList.toggle('text-white/45',!a); }); renderMarketItems(filter); }
+    function renderMarketItems(filter){ document.querySelector('#market-grid').innerHTML=marketItems.filter(x=>filter==='Todos'||x[0]===filter).map((x,i)=>`<article class="card overflow-hidden rounded-3xl transition"><img src="${['https://images.unsplash.com/photo-1500530855697-b586d89ba3ee','https://images.unsplash.com/photo-1547036967-23d11aacaee0','https://images.unsplash.com/photo-1535972260003-93e619ce0a73','https://images.unsplash.com/photo-1518709268805-4e9042af9f23','https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13','https://images.unsplash.com/photo-1500534623283-312aade485b7','https://images.unsplash.com/photo-1517836357463-d25dfeac3438','https://images.unsplash.com/photo-1473445361085-b9a07f55608b'][i]}?auto=format&fit=crop&w=900&q=78" class="h-44 w-full object-cover" alt="Imagem do anúncio ${x[1]}" loading="lazy"/><div class="p-4"><div class="flex items-center justify-between gap-2"><span class="rounded-full border border-ark-400/20 bg-ark-400/10 px-2 py-1 text-[10px] font-bold text-ark-400">${x[0]}</span><span class="text-sm font-black text-ark-gold">${x[6]}</span></div><h3 class="mt-3 text-base font-black">${x[1]}</h3><p class="mt-1 line-clamp-2 text-xs leading-5 text-white/45">${x[2]}</p><div class="mt-4 space-y-2 text-[11px] text-white/40"><div class="flex justify-between"><span>Vendedor</span><span class="font-bold text-white/65">${x[3]}</span></div><div class="flex justify-between"><span>Nível</span><span>${x[4]}</span></div><div class="flex justify-between"><span>Servidor</span><span>${x[5]}</span></div></div><button class="mt-4 w-full rounded-xl border border-white/8 bg-white/[.03] py-2.5 text-xs font-extrabold hover:bg-white/[.06]" onclick="showToast('Anúncio selecionado: ${x[1]}')">Ver anúncio</button></div></article>`).join(''); }
+    function renderChats(){ document.querySelector('#conversation-list').innerHTML=Object.entries(chats).map(([name,c],i)=>`<button onclick="openChat('${name}')" class="w-full p-4 text-left hover:bg-white/[.03] ${i===0?'bg-white/[.025]':''}"><div class="flex items-center gap-3"><div class="relative grid h-10 w-10 place-items-center rounded-xl bg-ark-700 text-xs font-black">${name.slice(0,2)}</div><div class="min-w-0"><div class="flex items-center gap-2"><span class="truncate text-sm font-bold">${name}</span><span class="h-2 w-2 rounded-full ${c.color}"></span></div><p class="mt-1 text-[11px] text-white/35">${c.status}</p></div></div></button>`).join(''); }
+    function openChat(name){ activeChat=name; renderChat(name); }
+    function renderChat(name){ const c=chats[name]; document.querySelector('#chat-header').innerHTML=`<div class="flex items-center gap-3"><div class="grid h-11 w-11 place-items-center rounded-2xl bg-ark-700 text-xs font-black">${name.slice(0,2)}</div><div><h3 class="text-sm font-black">${name}</h3><p class="text-xs text-white/40">${c.status}</p></div></div>`; document.querySelector('#chat-messages').innerHTML=c.msgs.map(m=>`<div class="flex ${m[0]==='out'?'justify-end':''}"><div class="max-w-[78%] rounded-2xl px-4 py-2.5 text-sm ${m[0]==='out'?'bg-ark-500/20 text-white':'bg-white/[.05] text-white/70'}">${m[1]}</div></div>`).join(''); const el=document.querySelector('#chat-messages'); el.scrollTop=el.scrollHeight; renderChats(); }
+    function handleChat(event){ event.preventDefault(); const input=document.querySelector('#chat-input'); const text=input.value.trim(); if(!text)return; console.log({chat:activeChat,message:text}); chats[activeChat].msgs.push(['out',text]); input.value=''; renderChat(activeChat); showToast('Mensagem enviada localmente.'); }
+    function renderSidebars(){ const servers=[['ARK Brasil PvP','1.8k','Online'],['Survival BR','1.2k','Online'],['Alpha Tribe','846','Online'],['Jurassic Community','512','Cheio']]; document.querySelector('#server-list').innerHTML=servers.map(s=>`<div class="flex items-center justify-between gap-3"><div><p class="text-xs font-bold">${s[0]}</p><p class="mt-1 text-[10px] text-white/30">${s[1]} jogadores</p></div><span class="rounded-full bg-white/[.03] px-2 py-1 text-[9px] font-bold ${s[2]==='Cheio'?'text-ark-gold':'text-ark-400'}">${s[2]}</span></div>`).join(''); document.querySelector('#trend-list').innerHTML=['#Rex','#PvP','#Aberration','#Tek','#Ragnarok','#Breeding'].map(t=>`<button onclick="showToast('Abrindo tendência ${t}')" class="rounded-full border border-white/7 bg-white/[.02] px-3 py-1.5 text-[10px] font-bold text-white/50 hover:text-white">${t}</button>`).join(''); const players=[['RaptorKing','12.4k'],['AlphaTribe','9.1k'],['DinoMaster','8.7k'],['TekHunter','7.3k']]; document.querySelector('#player-list').innerHTML=players.map(p=>`<div class="flex items-center justify-between gap-3"><div class="flex items-center gap-2"><div class="grid h-8 w-8 place-items-center rounded-lg bg-ark-700 text-[10px] font-black">${p[0].slice(0,2)}</div><div><p class="text-xs font-bold">${p[0]}</p><p class="text-[10px] text-white/30">${p[1]} seguidores</p></div></div><button class="rounded-lg bg-white/5 px-2 py-1 text-[10px] font-bold hover:bg-ark-400/15 hover:text-ark-400" onclick="showToast('Seguindo ${p[0]}')">Seguir</button></div>`).join(''); }
+    function renderExplore(){ const items=[['Tribos ativas','36 comunidades abertas','Encontre uma tribo para PvP, PvE ou coop.'],['Guias da semana','124 novos posts','Aprenda rotas, breeding, farm e boss fights.'],['Servidores BR','18 servidores destacados','Descubra mundos com a comunidade brasileira.'],['Criadores','Top 20 da semana','Veja os jogadores que estão movimentando o ArkHub.']]; document.querySelector('#explore-grid').innerHTML=items.map(x=>`<article class="card rounded-3xl p-5"><span class="text-2xl text-ark-400">◈</span><h3 class="mt-4 text-lg font-black">${x[0]}</h3><p class="mt-1 text-xs font-bold text-ark-400">${x[1]}</p><p class="mt-3 text-sm leading-6 text-white/45">${x[2]}</p><button class="mt-5 rounded-xl border border-white/8 px-3 py-2 text-xs font-bold hover:bg-white/[.03]" onclick="showToast('Área ${x[0]} selecionada.')">Explorar</button></article>`).join(''); }
+    function renderCommunity(){ const groups=[['ARK Brasil PvP','2.8k membros','Comunidade competitiva para raids e wars.'],['Survival BR','4.1k membros','PvE, construção e eventos semanais.'],['Aberration Masters','1.2k membros','Especialistas em mapas subterrâneos.'],['Tek Alliance','987 membros','Boss fights, Tek tier e estratégias avançadas.']]; document.querySelector('#community-grid').innerHTML=groups.map(x=>`<article class="card rounded-3xl p-5"><div class="flex items-start justify-between"><div class="grid h-12 w-12 place-items-center rounded-2xl bg-ark-700 text-lg">♧</div><span class="text-[10px] font-bold text-white/30">${x[1]}</span></div><h3 class="mt-4 text-base font-black">${x[0]}</h3><p class="mt-2 text-sm leading-6 text-white/45">${x[2]}</p><button class="mt-5 w-full rounded-xl bg-ark-400/10 py-2.5 text-xs font-extrabold text-ark-400 hover:bg-ark-400/15" onclick="showToast('Entrando em ${x[0]} (simulado).')">Entrar na comunidade</button></article>`).join(''); }
+    document.addEventListener('DOMContentLoaded',()=>{ renderPosts(); renderMarketplace(); renderChats(); renderSidebars(); renderExplore(); renderCommunity(); });
+  </script>
+</body>
+</html>
